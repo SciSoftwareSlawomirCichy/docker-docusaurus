@@ -1,0 +1,45 @@
+networks:
+  default-network:
+    driver: bridge
+
+volumes:
+  webpage-blog:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/workspace/git/docker-docusaurus/webpage/blog
+  webpage-docs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/workspace/git/docker-docusaurus/webpage/docs
+  webpage-src:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/workspace/git/docker-docusaurus/webpage/src
+  webpage-static:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/workspace/git/docker-docusaurus/webpage/static
+ 
+services:
+  my-webpage-sample:
+    image: scisoftware/docusaurus:10.9.1
+    networks:
+      - default-network
+    volumes: 
+      - webpage-blog:/webdir/public/blog:ro
+      - webpage-docs:/webdir/public/docs:ro
+      - webpage-src:/webdir/public/src:ro
+      - webpage-static:/webdir/public/static:ro
+      - type: bind
+        source: /d/workspace/git/docker-docusaurus/webpage/docusaurus.config.js
+        target: /webdir/public/docusaurus.config.js
+    ports:
+      - "3000:3000"

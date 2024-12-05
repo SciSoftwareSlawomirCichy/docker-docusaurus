@@ -8,8 +8,6 @@ You can find more about the tool at https://docusaurus.io/.
 In this project I built a Docker image that allows to run the server on address http://localhost:3000/.
 ![http://localhost:3000/](https://github.com/SciSoftwareSlawomirCichy/docker-docusaurus/blob/main/docs/img/localhost_main_page.png?raw=true)
 
-
-
 ### Additional volumes declared in image
 
 In image was declared three volumes (see [Dockerfile](Dockerfile)):
@@ -26,6 +24,10 @@ For more information about organizing folders in a website project, read the doc
 
 
 ### Build image command
+
+> [!TIP]
+> You don't need to build an image. You can use a ready-made image stored on Dockerhub: [scisoftware/docusaurus](https://hub.docker.com/repository/docker/scisoftware/docusaurus/general).
+
 
 ```bash
 docker build -f Dockerfile -t scisoftware/docusaurus:10.9.1 .
