@@ -27,6 +27,9 @@ For more information about organizing folders in a website project, read the doc
 
 > [!TIP]
 > You don't need to build an image. You can use a ready-made image stored on Dockerhub: [scisoftware/docusaurus](https://hub.docker.com/repository/docker/scisoftware/docusaurus/general).
+> ```
+> docker pull scisoftware/docusaurus:10.9.1
+> ```
 
 
 ```bash
