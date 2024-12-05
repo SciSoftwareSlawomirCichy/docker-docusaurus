@@ -1,0 +1,18 @@
+FROM node:latest
+
+ARG NMP_VERSION=10.9.1
+RUN npm install -g npm@${NMP_VERSION}
+
+######################################
+# If are some troubles use this file in command line:
+# tail -f /run-without-webserver.log
+# See: CMD
+RUN touch /run-without-webserver.log && chown node:node /run-without-webserver.log
+######################################
+
+USER node
+WORKDIR /webdir
+VOLUME ["/webdir"]
+
+# If are some troubles use this file in command line:
+CMD ["tail", "-f", "/run-without-webserver.log"]
