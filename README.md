@@ -80,6 +80,10 @@ docker run --name my-webpage-sample --rm -it `
 
 ## About [Docusaurus](https://docusaurus.io/)
 
+> Docusaurus is a project for building, deploying, and maintaining open source project websites easily.
+
+***Source: (Githib Docusaurus Project)(https://github.com/facebook/docusaurus)***
+
 ### The main differences between Github and Docusaurs
 
 Markdown interpretation differences I found that may affect your decision. 
