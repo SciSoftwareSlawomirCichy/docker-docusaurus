@@ -5,7 +5,10 @@ You can find more about the tool at https://docusaurus.io/.
 
 ## About project
 
-In this project I built a Docker image that allows to run the server.
+In this project I built a Docker image that allows to run the server on address http://localhost:3000/.
+![http://localhost:3000/](docs/img/sample_predefinied_tree.png)
+
+
 
 ### Additional volumes declared in image
 
