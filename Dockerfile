@@ -24,11 +24,19 @@ RUN echo "0" > /webdir/cmd.txt
 ######################################
 RUN npx --yes create-docusaurus@latest /webdir/public classic < /webdir/cmd.txt && \
  cd /webdir/public && \
+ mkdir -p /webdir/public/i18n && \
  yarn install 
 
 EXPOSE 3000
 WORKDIR /webdir/public
-VOLUME ["/webdir/public/blog","/webdir/public/docs","/webdir/public/src","/webdir/public/static","/webdir/public/docusaurus.config.js"]
+VOLUME [\
+	"/webdir/public/blog",\
+	"/webdir/public/docs",\
+	"/webdir/public/src",\
+	"/webdir/public/static",\
+	"/webdir/public/i18n",\
+	"/webdir/public/docusaurus.config.js"\
+]
 
 # If are some troubles use this file in command line:
 #CMD ["tail", "-f", "/run-without-webserver.log"]

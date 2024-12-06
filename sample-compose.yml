@@ -27,6 +27,12 @@ volumes:
       o: bind
       type: none
       device: /d/workspace/git/docker-docusaurus/webpage/static
+  webpage-i18n:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /d/workspace/git/docker-docusaurus/webpage/i18n
  
 services:
   my-webpage-sample:
@@ -38,6 +44,7 @@ services:
       - webpage-docs:/webdir/public/docs:ro
       - webpage-src:/webdir/public/src:ro
       - webpage-static:/webdir/public/static:ro
+      - webpage-i18n:/webdir/public/i18n:rw
       - type: bind
         source: /d/workspace/git/docker-docusaurus/webpage/docusaurus.config.js
         target: /webdir/public/docusaurus.config.js

@@ -27,6 +27,7 @@ docker run --name docusaurus --rm -it \
  -v /d/workspace/git/docker-docusaurus/webpage/src:/webdir/public/src \
  -v /d/workspace/git/docker-docusaurus/webpage/static:/webdir/public/static \
  -v /d/workspace/git/docker-docusaurus/webpage/docusaurus.config.js:/webdir/public/docusaurus.config.js \
+ -v /d/workspace/git/docker-docusaurus/webpage/i18n:/webdir/public/i18n \
  -p 3000:3000 \
  scisoftware/docusaurus:10.9.1
  

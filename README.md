@@ -14,11 +14,12 @@ In image was declared three volumes (see [Dockerfile](Dockerfile)):
 
 | Localization | Description |
 | ---- | -------------- |
-| /webdir/public/blog | Contains the blog Markdown files. You can delete the directory if you've disabled the blog plugin, or you can change its name after setting the path option. |
-| /webdir/public/docs | Contains the Markdown files for the docs. |
-| /webdir/public/blog | Non-documentation files like pages or custom React components. |
-| /webdir/public/blog | Static directory. Any contents inside here will be copied into the root of the final build directory. |
-| /webdir/public/docusaurus.config.js | A config file containing the site configuration. |
+| /webdir/public/blog | Folder. Contains the blog Markdown files. You can delete the directory if you've disabled the blog plugin, or you can change its name after setting the path option. |
+| /webdir/public/docs | Folder. Contains the Markdown files for the docs. |
+| /webdir/public/src | Folder. Non-documentation files like pages or custom React components. |
+| /webdir/public/static | Folder. Static directory. Any contents inside here will be copied into the root of the final build directory. |
+| /webdir/public/docusaurus.config.js | File. A config file containing the site configuration. |
+| /webdir/public/i18n | Folder. Translated documents, in other languages. More about the procedure of translation please see [Translate your site](./i18n/README.md).  |
 
 For more information about organizing folders in a website project, read the documentation pages of [Project Structure](https://docusaurus.io/docs/installation#project-structure).
 
@@ -54,6 +55,7 @@ docker run --name my-webpage-sample --rm -it \
  -v $DOCUSAURUS_PROJECT/src:/webdir/public/src \
  -v $DOCUSAURUS_PROJECT/static:/webdir/public/static \
  -v $DOCUSAURUS_PROJECT/docusaurus.config.js:/webdir/public/docusaurus.config.js \
+ -v $DOCUSAURUS_PROJECT/i18n:/webdir/public/i18n \
  -p 3000:3000 \
  scisoftware/docusaurus:10.9.1
 ```
@@ -80,6 +82,7 @@ docker run --name my-webpage-sample --rm -it `
  -v %DOCUSAURUS_PROJECT%/src:/webdir/public/src `
  -v %DOCUSAURUS_PROJECT%/static:/webdir/public/static `
  -v %DOCUSAURUS_PROJECT%/docusaurus.config.js:/webdir/public/docusaurus.config.js `
+ -v %DOCUSAURUS_PROJECT%/i18n:/webdir/public/i18n `
  -p 3000:3000 `
  scisoftware/docusaurus:10.9.1
 
