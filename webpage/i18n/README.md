@@ -1,5 +1,8 @@
 # Translate your site
 
+> [!TIP]
+> The content of this page is copied from the original tutorial "Docusaurus".
+
 Let's translate `docs/intro.md` to French.
 
 ## Configure i18n

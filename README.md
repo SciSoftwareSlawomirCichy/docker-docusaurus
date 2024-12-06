@@ -19,7 +19,7 @@ In image was declared three volumes (see [Dockerfile](Dockerfile)):
 | /webdir/public/src | Folder. Non-documentation files like pages or custom React components. |
 | /webdir/public/static | Folder. Static directory. Any contents inside here will be copied into the root of the final build directory. |
 | /webdir/public/docusaurus.config.js | File. A config file containing the site configuration. |
-| /webdir/public/i18n | Folder. Translated documents, in other languages. More about the procedure of translation please see [Translate your site](./i18n/README.md).  |
+| /webdir/public/i18n | Folder. Translated documents, in other languages. More about the procedure of translation please see [Translate your site](./webpage/i18n/README.md).  |
 
 For more information about organizing folders in a website project, read the documentation pages of [Project Structure](https://docusaurus.io/docs/installation#project-structure).
 
