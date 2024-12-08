@@ -27,6 +27,11 @@ RUN npx --yes create-docusaurus@latest /webdir/public classic < /webdir/cmd.txt 
  mkdir -p /webdir/public/i18n && \
  yarn install 
 
+USER root
+COPY service/startServer.sh /webdir/public/startServer.sh
+RUN chown node:node /webdir/public/startServer.sh && chmod u+x /webdir/public/startServer.sh
+
+USER node
 EXPOSE 3000
 WORKDIR /webdir/public
 VOLUME [\
@@ -40,4 +45,6 @@ VOLUME [\
 
 # If are some troubles use this file in command line:
 #CMD ["tail", "-f", "/run-without-webserver.log"]
-CMD ["yarn", "start", "--host", "0.0.0.0"]
+#CMD ["yarn", "start", "--host", "0.0.0.0"]
+#CMD ["npm", "run", "serve"]
+CMD ["./startServer.sh"]
