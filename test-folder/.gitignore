@@ -1,0 +1,12 @@
+/.docusaurus/
+/build/
+/blog/
+/docs/
+/docusaurus.config.js
+/node_modules/
+/package-lock.json
+/package.json
+/src/
+/static/
+/sidebars.js
+/README.md

@@ -8,33 +8,32 @@ You can find more about the tool at https://docusaurus.io/.
 In this project I built a Docker image that allows to run the server on address http://localhost:3000/.
 ![http://localhost:3000/](https://github.com/SciSoftwareSlawomirCichy/docker-docusaurus/blob/main/docs/img/localhost_main_page.png?raw=true)
 
-### Additional volumes declared in image
+### Volumes declared in image
 
 In image was declared three volumes (see [Dockerfile](Dockerfile)):
 
 | Localization | Description |
 | ---- | -------------- |
-| /webdir/public/blog | Folder. Contains the blog Markdown files. You can delete the directory if you've disabled the blog plugin, or you can change its name after setting the path option. |
-| /webdir/public/docs | Folder. Contains the Markdown files for the docs. |
-| /webdir/public/src | Folder. Non-documentation files like pages or custom React components. |
-| /webdir/public/static | Folder. Static directory. Any contents inside here will be copied into the root of the final build directory. |
-| /webdir/public/docusaurus.config.js | File. A config file containing the site configuration. |
-| /webdir/public/i18n | Folder. Translated documents, in other languages. More about the procedure of translation please see [Translate your site](./webpage/i18n/README.md).  |
+| /webdir/public | Folder. Contains the Docusaurus project. |
 
-For more information about organizing folders in a website project, read the documentation pages of [Project Structure](https://docusaurus.io/docs/installation#project-structure).
+For more information about organizing folders in a Docusaurus project, read the documentation pages of [Project Structure](https://docusaurus.io/docs/installation#project-structure).
 
 
 ### Build image command
 
 > [!TIP]
 > You don't need to build an image. You can use a ready-made image stored on Dockerhub: [scisoftware/docusaurus](https://hub.docker.com/repository/docker/scisoftware/docusaurus/general).
-> ```
-> docker pull scisoftware/docusaurus:10.9.1
+> ```bash
+> export NMP_VERSION=10.9.2
+> docker pull scisoftware/docusaurus:${NMP_VERSION}
 > ```
 
 
 ```bash
-docker build -f Dockerfile -t scisoftware/docusaurus:10.9.1 .
+export NMP_VERSION=10.9.2
+docker build --no-cache --build-arg NMP_VERSION=${NMP_VERSION} \
+ -f Dockerfile \
+ -t scisoftware/docusaurus:${NMP_VERSION} .
 
 ```
 
@@ -45,19 +44,17 @@ For running the container based on the image you can use docker command:
 - Linux
 
 > [!TIP]
-> Before you run the command set properly environment value `DOCUSAURUS_PROJECT`.
+> Before you run the command set properly environment values `NMP_VERSION` and `VOLUME_HOME`.
+> ```bash
+> export NMP_VERSION=10.9.2
+> export VOLUME_HOME=/d/workspace/git/<my-webpage>
+> ```
 
 ```bash
-export DOCUSAURUS_PROJECT=/d/workspace/git/my-webpage
-docker run --name my-webpage-sample --rm -it \
- -v $DOCUSAURUS_PROJECT/blog:/webdir/public/blog \
- -v $DOCUSAURUS_PROJECT/docs:/webdir/public/docs \
- -v $DOCUSAURUS_PROJECT/src:/webdir/public/src \
- -v $DOCUSAURUS_PROJECT/static:/webdir/public/static \
- -v $DOCUSAURUS_PROJECT/docusaurus.config.js:/webdir/public/docusaurus.config.js \
- -v $DOCUSAURUS_PROJECT/i18n:/webdir/public/i18n \
+docker run --name docusaurus --rm -it \
+ -v $VOLUME_HOME:/webdir/public \
  -p 3000:3000 \
- scisoftware/docusaurus:10.9.1
+ scisoftware/docusaurus:${NMP_VERSION}
 ```
 - Linux - docker compose
 
@@ -72,20 +69,17 @@ docker compose -f sample-compose.yml up
 - Windows, PowerShell
 
 > [!TIP]
-> Before you run the command set properly environment value `DOCUSAURUS_PROJECT`.
+> Before you run the command set properly environment values `NMP_VERSION` and `VOLUME_HOME`.
+> ```bash
+> set NMP_VERSION=10.9.2
+> set VOLUME_HOME=/d/workspace/git/<my-webpage>
+> ```
 
 ```shell
-set DOCUSAURUS_PROJECT=/d/workspace/git/my-webpage
-docker run --name my-webpage-sample --rm -it `
- -v %DOCUSAURUS_PROJECT%/blog:/webdir/public/blog `
- -v %DOCUSAURUS_PROJECT%/docs:/webdir/public/docs `
- -v %DOCUSAURUS_PROJECT%/src:/webdir/public/src `
- -v %DOCUSAURUS_PROJECT%/static:/webdir/public/static `
- -v %DOCUSAURUS_PROJECT%/docusaurus.config.js:/webdir/public/docusaurus.config.js `
- -v %DOCUSAURUS_PROJECT%/i18n:/webdir/public/i18n `
- -p 3000:3000 `
- scisoftware/docusaurus:10.9.1
-
+docker run --name docusaurus --rm -it \
+ -v %VOLUME_HOME%:/webdir/public \
+ -p 3000:3000 \
+ scisoftware/docusaurus:%NMP_VERSION%
 ```
 
 

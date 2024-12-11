@@ -1,36 +1,40 @@
 ######################################
 # Pocecenia pomocnicze nie uwzględnione w README
 ######################################
-  
-docker build -f Dockerfile -t scisoftware/docusaurus:10.9.1 .
+ 
+export NMP_VERSION=10.9.2
+export VOLUME_HOME=/d/workspace/git/docker-docusaurus/test-folder
+
+# Budowanie obrazu
+docker build --no-cache --build-arg NMP_VERSION=${NMP_VERSION}\
+ -f Dockerfile\
+ -t scisoftware/docusaurus:${NMP_VERSION} .
+
+# Uruchamianie kontenera
+docker run --name docusaurus --rm -it \
+ -v $VOLUME_HOME:/webdir/public \
+ -p 3000:3000 \
+ scisoftware/docusaurus:${NMP_VERSION}
+
+export CONTAINER_ID=`docker run --name docusaurus --rm --detach \
+ -v $VOLUME_HOME:/webdir/public \
+ -p 3000:3000 \
+ scisoftware/docusaurus:${NMP_VERSION}`
 
 # Publikowanie obrazów
 # Dokumentacja poleca by bazować na działającym kontenerze - w sumie masz wtedy pewność, że obraz działa
 # 1. Robimy tag obrazu z kontenera
 docker container ls
-docker container commit 7b69cd1e909e docusaurus:latest
-#                 gdzie 7b69cd1e909e to identyfikator działającego kontenera
+docker container commit ${CONTAINER_ID} docusaurus:latest
+#                 gdzie ${CONTAINER_ID} identyfikator działającego kontenera
 # 2. Tworzymy docelowy tag obrazu (przykład)
 docker image tag docusaurus:latest scisoftware/docusaurus:latest
-docker image tag docusaurus:latest scisoftware/docusaurus:10.9.1
+docker image tag docusaurus:latest scisoftware/docusaurus:${NMP_VERSION}
 # gdzie ubuntu-0.1 to obecna wersja obrazu
 # 3. wysyłamy w świat
 docker image push -a scisoftware/docusaurus
 
-docker run --name docusaurus --rm -it \
- -p 3000:3000 \
- scisoftware/docusaurus:10.9.1
-
-docker run --name docusaurus --rm -it \
- -v /d/workspace/git/docker-docusaurus/webpage/blog:/webdir/public/blog \
- -v /d/workspace/git/docker-docusaurus/webpage/docs:/webdir/public/docs \
- -v /d/workspace/git/docker-docusaurus/webpage/src:/webdir/public/src \
- -v /d/workspace/git/docker-docusaurus/webpage/static:/webdir/public/static \
- -v /d/workspace/git/docker-docusaurus/webpage/docusaurus.config.js:/webdir/public/docusaurus.config.js \
- -v /d/workspace/git/docker-docusaurus/webpage/i18n:/webdir/public/i18n \
- -p 3000:3000 \
- scisoftware/docusaurus:10.9.1
- 
+# Uruchamianie kompozycji
 docker compose -f sample-compose.yml up
 
 

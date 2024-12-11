@@ -1,6 +1,6 @@
 FROM node:latest
 
-ARG NMP_VERSION=10.9.1
+ARG NMP_VERSION=10.9.2
 RUN npm install -g npm@${NMP_VERSION}
 
 ######################################
@@ -17,34 +17,25 @@ WORKDIR /webdir
 # Instalaltion required answer for query "Wich language...?"
 # For silent mode use answers in /webdir/cmd.txt
 # https://stackoverflow.com/questions/64599477/automate-responses-to-prompts-in-an-npm-npx-command-line-install 
-# Bug? Use "JavaScript" to run as "TypeScript" 
-#RUN echo "JavaScript" > /webdir/cmd.txt
-# Use "0" to run as "JavaScript"
-RUN echo "0" > /webdir/cmd.txt 
+# Comman create docusaurus
+# https://docusaurus.io/docs/api/misc/create-docusaurus
 ######################################
-RUN npx --yes create-docusaurus@latest /webdir/public classic < /webdir/cmd.txt && \
- cd /webdir/public && \
- mkdir -p /webdir/public/i18n && \
- yarn install 
+RUN npx create-docusaurus@latest template classic /webdir --javascript --package-manager npm
 
 USER root
-COPY service/startServer.sh /webdir/public/startServer.sh
-RUN chown node:node /webdir/public/startServer.sh && chmod u+x /webdir/public/startServer.sh
+RUN mkdir -p /webdir/service && mkdir -p /webdir/public
+COPY service/startServer.sh /webdir/service/startServer.sh
+RUN chown -R node:node /webdir/service && \
+ chmod u+x /webdir/service/startServer.sh && \ 
+ chown -R node:node /webdir/public
 
 USER node
 EXPOSE 3000
 WORKDIR /webdir/public
-VOLUME [\
-	"/webdir/public/blog",\
-	"/webdir/public/docs",\
-	"/webdir/public/src",\
-	"/webdir/public/static",\
-	"/webdir/public/i18n",\
-	"/webdir/public/docusaurus.config.js"\
-]
+VOLUME ["/webdir/public"]
 
 # If are some troubles use this file in command line:
 #CMD ["tail", "-f", "/run-without-webserver.log"]
 #CMD ["yarn", "start", "--host", "0.0.0.0"]
 #CMD ["npm", "run", "serve"]
-CMD ["./startServer.sh"]
+CMD ["/webdir/service/startServer.sh"]
