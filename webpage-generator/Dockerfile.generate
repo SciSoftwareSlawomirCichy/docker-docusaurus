@@ -7,10 +7,9 @@ RUN npm install -g npm@${NMP_VERSION}
 # If are some troubles use this file in command line:
 # tail -f /run-without-webserver.log
 # See: CMD
-RUN touch /run-without-webserver.log && chown node:node /run-without-webserver.log
+RUN touch /run-without-webserver.log   
 ######################################
 
-USER node
 WORKDIR /webdir
 VOLUME ["/webdir"]
 
