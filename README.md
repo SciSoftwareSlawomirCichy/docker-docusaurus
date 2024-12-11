@@ -76,9 +76,9 @@ docker compose -f sample-compose.yml up
 > ```
 
 ```shell
-docker run --name docusaurus --rm -it \
- -v %VOLUME_HOME%:/webdir/public \
- -p 3000:3000 \
+docker run --name docusaurus --rm -it `
+ -v %VOLUME_HOME%:/webdir/public `
+ -p 3000:3000 `
  scisoftware/docusaurus:%NMP_VERSION%
 ```
 
