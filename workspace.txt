@@ -21,6 +21,8 @@ export CONTAINER_ID=`docker run --name docusaurus --rm --detach \
  -p 3000:3000 \
  scisoftware/docusaurus:${NMP_VERSION}`
 
+docker stop ${CONTAINER_ID}
+
 # Publikowanie obrazów
 # Dokumentacja poleca by bazować na działającym kontenerze - w sumie masz wtedy pewność, że obraz działa
 # 1. Robimy tag obrazu z kontenera
@@ -30,7 +32,7 @@ docker container commit ${CONTAINER_ID} docusaurus:latest
 # 2. Tworzymy docelowy tag obrazu (przykład)
 docker image tag docusaurus:latest scisoftware/docusaurus:latest
 docker image tag docusaurus:latest scisoftware/docusaurus:${NMP_VERSION}
-# gdzie ubuntu-0.1 to obecna wersja obrazu
+# gdzie ${NMP_VERSION} to obecna wersja obrazu
 # 3. wysyłamy w świat
 docker image push -a scisoftware/docusaurus
 

@@ -10,11 +10,12 @@ In this project I built a Docker image that allows to run the server on address 
 
 ### Volumes declared in image
 
-In image was declared three volumes (see [Dockerfile](Dockerfile)):
+In image was declared two volumes (see [Dockerfile](Dockerfile)):
 
 | Localization | Description |
 | ---- | -------------- |
 | /webdir/public | Folder. Contains the Docusaurus project. |
+| /webdir/.git | Optional! The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer. The basic Git workflow goes something like this: You modify files in your working tree. |
 
 For more information about organizing folders in a Docusaurus project, read the documentation pages of [Project Structure](https://docusaurus.io/docs/installation#project-structure).
 
