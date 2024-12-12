@@ -9,6 +9,8 @@ export DOCUSAURUS_CONF_FILE=${WORK_DIR}/docusaurus.config.js
 # For resolving fatal error: 
 #  detected dubious ownership in repository at '/webdir/public'
 git config --global --add safe.directory ${WORK_DIR}
+#  Could not resolve host: github.com
+git config --unset http.proxy
 
 if [ ! -f "$DOCUSAURUS_CONF_FILE" ]; then
     echo "Create project from template..."
