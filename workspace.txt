@@ -11,12 +11,12 @@ docker build --no-cache --build-arg NMP_VERSION=${NMP_VERSION}\
  -t scisoftware/docusaurus:${NMP_VERSION} .
 
 # Uruchamianie kontenera
-docker run --name docusaurus --rm -it \
+docker run --name my-webpage-sample --rm -it \
  -v $VOLUME_HOME:/webdir/public \
  -p 3000:3000 \
  scisoftware/docusaurus:${NMP_VERSION}
 
-export CONTAINER_ID=`docker run --name docusaurus --rm --detach \
+export CONTAINER_ID=`docker run --name my-webpage-sample --rm --detach \
  -v $VOLUME_HOME:/webdir/public \
  -p 3000:3000 \
  scisoftware/docusaurus:${NMP_VERSION}`
@@ -39,4 +39,30 @@ docker image push -a scisoftware/docusaurus
 # Uruchamianie kompozycji
 docker compose -f sample-compose.yml up
 
+##########################################
+# Obsługa repozytorium GIT
+#
+# Napisałem skrypt docker-exec.sh, który pozwala na połączenie się do kontenera
+```text
+#!/bin/bash
+export CONTAINER_ID=`docker container ls | grep ${1} | awk '{print $1}'`
+docker exec -it ${CONTAINER_ID} bash
+```
+# Teraz można się zalogować do kontenera następującym poleceniem:
+docker-exec my-webpage-sample
 
+# Napisałem skrypt git-pull.sh i umieściłem go w obrazie:
+```text
+#!/bin/bash
+ulimit -n 8192
+export WEB_DIR=/webdir
+export WORK_DIR=${WEB_DIR}/${WORKSPACE_NAME}
+cd ${WORK_DIR}
+git config --unset http.proxy
+git stash
+git pull
+exit 0
+```
+# Teraz GIT pull można wykonać (po zalogowaniu do kontenera) wydając polecenie: 
+> git-pull.sh
+##########################################

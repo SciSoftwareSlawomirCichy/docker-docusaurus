@@ -1,7 +1,10 @@
 FROM node:latest
 
 ARG NMP_VERSION=10.9.2
+# Workspace directory name.
 ENV WORKSPACE_NAME=public
+# Workspace directory is from the Git repository?
+ENV WORKSPACE_IS_GIT_REPO=false
 
 RUN npm install -g npm@${NMP_VERSION}
 
@@ -31,8 +34,9 @@ RUN npx create-docusaurus@latest template classic /webdir --javascript --package
 
 USER root
 RUN mkdir -p /webdir/service && mkdir -p /webdir/public && mkdir -p /webdir/.git
-COPY service/startServer.sh /webdir/service/startServer.sh
+COPY service/* /webdir/service
 RUN chown -R node:node /webdir/service && \
+ chmod u+x /webdir/service/git-pull.sh && \ 
  chmod u+x /webdir/service/startServer.sh && \ 
  chown -R node:node /webdir/public && \
  chown -R node:node /webdir/.git
@@ -41,6 +45,7 @@ USER node
 EXPOSE 3000
 WORKDIR /webdir/public
 VOLUME ["/webdir/public", "/webdir/.git"]
+ENV PATH="/webdir/service:${PATH}" 
 
 # If are some troubles use this file in command line:
 #CMD ["tail", "-f", "/run-without-webserver.log"]
