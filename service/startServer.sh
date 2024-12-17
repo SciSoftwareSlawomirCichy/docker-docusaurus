@@ -47,6 +47,7 @@ if [ ! -d "$NODE_MODULES_DIRECTORY" ]; then
 	npm add docusaurus
 	if [ -f "$NODE_MODULES_PLUGINS" ]; then
     	echo ">>> Installing plugins..."
+    	chmod u+x $NODE_MODULES_PLUGINS
 		(cd ${WORK_DIR} && exec ${NODE_MODULES_PLUGINS})
 	fi
   	echo ">>> Installation done."
