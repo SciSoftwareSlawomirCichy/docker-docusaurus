@@ -9,9 +9,12 @@ ENV WORKSPACE_IS_GIT_REPO=false
 RUN npm install -g npm@${NMP_VERSION}
 
 RUN apt update && apt install -y \
- vim
+ vim \
+ sudo
 RUN apt clean && \
- rm -fr /var/lib/apt/lists/*
+ rm -fr /var/lib/apt/lists/* && \
+ adduser node sudo && \
+ echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
  
 ######################################
 # If are some troubles use this file in command line:
@@ -35,7 +38,9 @@ RUN npx create-docusaurus@latest template classic /webdir --javascript --package
 USER root
 RUN mkdir -p /webdir/service && mkdir -p /webdir/public && mkdir -p /webdir/.git
 COPY service/* /webdir/service
+COPY templates/* /webdir/template
 RUN chown -R node:node /webdir/service && \
+ chown -R node:node /webdir/template && \
  chmod u+x /webdir/service/git-pull.sh && \ 
  chmod u+x /webdir/service/startServer.sh && \ 
  chown -R node:node /webdir/public && \

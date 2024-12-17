@@ -13,12 +13,12 @@ docker build --no-cache --build-arg NMP_VERSION=${NMP_VERSION}\
 # Uruchamianie kontenera
 docker run --name my-webpage-sample --rm -it \
  -v $VOLUME_HOME:/webdir/public \
- -p 3000:3000 \
+ -p 3080:3000 \
  scisoftware/docusaurus:${NMP_VERSION}
 
 export CONTAINER_ID=`docker run --name my-webpage-sample --rm --detach \
  -v $VOLUME_HOME:/webdir/public \
- -p 3000:3000 \
+ -p 3080:3000 \
  scisoftware/docusaurus:${NMP_VERSION}`
 
 docker stop ${CONTAINER_ID}
